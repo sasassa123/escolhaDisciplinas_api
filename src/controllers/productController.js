@@ -4,10 +4,44 @@ const products = [
   { id: 3, name: 'Lista resolvida de Física II', price: 0, description: 'Lista de exercícios com resolução passo a passo' },
 ];
 
+/**
+ * GET /api/products — lista todos os produtos.
+ *
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @returns {void} Responde 200 com o array de produtos.
+ */
 function listProducts(req, res) {
   res.status(200).json(products);
 }
 
+/**
+ * GET /api/products/:id — busca um produto pelo id.
+ *
+ * @param {import('express').Request} req Espera `req.params.id` numérico.
+ * @param {import('express').Response} res
+ * @returns {void} Responde 200 com o produto ou 404 se ele não existir.
+ */
+function getProductById(req, res) {
+  const id = Number(req.params.id);
+  const product = Number.isInteger(id)
+    ? products.find((item) => item.id === id)
+    : undefined;
+
+  if (!product) {
+    return res.status(404).json({ error: 'Produto não encontrado' });
+  }
+
+  return res.status(200).json(product);
+}
+
+/**
+ * POST /api/products — cria um produto novo.
+ *
+ * @param {import('express').Request} req Espera `req.body` com `{ name, price, description? }`.
+ * @param {import('express').Response} res
+ * @returns {void} Responde 201 com o produto criado ou 400 com a lista de erros.
+ */
 function createProduct(req, res) {
   const { name, price, description } = req.body || {};
   const errors = [];
@@ -39,5 +73,6 @@ function createProduct(req, res) {
 module.exports = {
   products,
   listProducts,
+  getProductById,
   createProduct,
 };
