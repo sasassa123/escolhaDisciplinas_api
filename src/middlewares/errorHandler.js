@@ -3,10 +3,19 @@
  * o que mostrar no log e o que devolver para o cliente.
  */
 function errorHandler(error, req, res, next) {
-  console.error(error.stack);
+  if (error.type === 'entity.too.large') {
+    return res.status(413).json({ error: 'O arquivo enviado é maior que o limite permitido' });
+  }
+  if (error.type === 'entity.parse.failed') {
+    return res.status(400).json({ error: 'JSON inválido no corpo da requisição' });
+  }
+
   const statusCode = error.statusCode || error.status || 500;
+  if (statusCode >= 500) console.error(error.stack);
   const message = statusCode < 500 ? error.message : 'Erro interno do Servidor';
-  res.status(statusCode).json({ error: message });
+  const body = { error: message };
+  if (statusCode < 500 && error.details) body.details = error.details;
+  res.status(statusCode).json(body);
 }
 
 module.exports = errorHandler;
