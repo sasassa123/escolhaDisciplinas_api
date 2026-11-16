@@ -1,6 +1,6 @@
 # Gangue do Patinete — API
 
-API REST do **Acervo**, portal em que o aluno encontra, numa única página por disciplina, ementa, pré-requisitos, professores, materiais enviados pela comunidade, avaliações de quem já cursou e perguntas e respostas com veteranos.
+API REST do **Optativa+**, portal em que o aluno encontra, numa única página por disciplina, ementa, pré-requisitos, professores, materiais enviados pela comunidade, avaliações de quem já cursou e perguntas e respostas com veteranos.
 
 Este repositório contém a API REST do projeto. A interface web fica no repositório [escolhaDisciplinas_frontend](https://github.com/sasassa123/escolhaDisciplinas_frontend).
 
